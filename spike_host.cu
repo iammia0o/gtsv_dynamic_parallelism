@@ -154,12 +154,12 @@ void gtsv_spike_partial_diag_pivot_v1(const DOUBLE* dl, const DOUBLE* d, const D
 	
 	
 	//SPIKE solver
-	spike_local_reduction_x1<T><<<s,b_dim,local_reduction_share_size>>>(b_buffer,w_buffer,v_buffer,x_level_2, w_level_2, v_level_2,stride);
+	spike_local_reduction_x1<DOUBLE><<<s,b_dim,local_reduction_share_size>>>(b_buffer,w_buffer,v_buffer,x_level_2, w_level_2, v_level_2,stride);
 	spike_GPU_global_solving_x1<<<1,32,global_share_size>>>(x_level_2,w_level_2,v_level_2,s);
-	spike_GPU_local_solving_x1<T><<<s,b_dim,local_solving_share_size>>>(b_buffer,w_buffer,v_buffer,x_level_2,stride);
-	spike_GPU_back_sub_x1<T><<<s,b_dim>>>(b_buffer,w_buffer,v_buffer, x_level_2,stride);
+	spike_GPU_local_solving_x1<DOUBLE><<<s,b_dim,local_solving_share_size>>>(b_buffer,w_buffer,v_buffer,x_level_2,stride);
+	spike_GPU_back_sub_x1<DOUBLE><<<s,b_dim>>>(b_buffer,w_buffer,v_buffer, x_level_2,stride);
 
-	back_marshaling_bxb<T><<<g_data ,b_data, marshaling_share_size >>>(b,b_buffer,stride,b_dim,m);
+	back_marshaling_bxb<DOUBLE><<<g_data ,b_data, marshaling_share_size >>>(b,b_buffer,stride,b_dim,m);
 	
 	//free
 	
