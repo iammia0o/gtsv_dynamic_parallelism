@@ -34,7 +34,6 @@ OR THE USE OR OTHER DEALINGS WITH THE SOFTWARE.
 #include <sys/sysinfo.h>
 
 #define DEBUG 0
-#define DOUBLE double
 
 static double get_second (void)
 {
@@ -208,21 +207,21 @@ void test_gtsv_v1(int m)
 	srand(54321);
 	//generate random data
 	h_dl[0]   = cuGet(0);
-	h_d[0]    = cuGet( (rand()/(double)RAND_MAX)*2.0-1.0 );
-	h_du[0]   = cuGet( (rand()/(double)RAND_MAX)*2.0-1.0);
-	h_dl[m-1] = cuGet( (rand()/(double)RAND_MAX)*2.0-1.0);
-	h_d[m-1]  = cuGet( (rand()/(double)RAND_MAX)*2.0-1.0);
+	h_d[0]    = (rand()/(double)RAND_MAX)*2.0-1.0;
+	h_du[0]   = (rand()/(double)RAND_MAX)*2.0-1.0;
+	h_dl[m-1] = (rand()/(double)RAND_MAX)*2.0-1.0;
+	h_d[m-1]  = (rand()/(double)RAND_MAX)*2.0-1.0;
 	h_du[m-1] = cuGet(0);
 	
-	h_b[0]    = cuGet( (rand()/(double)RAND_MAX)*2.0-1.0 );
-	h_b[m-1]  = cuGet(  (rand()/(double)RAND_MAX)*2.0-1.0 );
+	h_b[0]    = (rand()/(double)RAND_MAX)*2.0-1.0 ;
+	h_b[m-1]  =  (rand()/(double)RAND_MAX)*2.0-1.0 ;
 	
 	for(k=1;k<m-1;k++)
 	{
-		h_dl[k] =cuGet( (rand()/(double)RAND_MAX)*2.0-1.0);
-		h_du[k] =cuGet( (rand()/(double)RAND_MAX)*2.0-1.0);
-		h_d[k]  =cuGet( (rand()/(double)RAND_MAX)*2.0-1.0);
-		h_b[k]  =cuGet( (rand()/(double)RAND_MAX)*2.0-1.0);
+		h_dl[k] =(rand()/(double)RAND_MAX)*2.0-1.0;
+		h_du[k] =(rand()/(double)RAND_MAX)*2.0-1.0;
+		h_d[k]  =(rand()/(double)RAND_MAX)*2.0-1.0;
+		h_b[k]  =(rand()/(double)RAND_MAX)*2.0-1.0;
 	}
 	
 	
