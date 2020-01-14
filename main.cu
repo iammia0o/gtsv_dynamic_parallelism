@@ -27,7 +27,7 @@ OR THE USE OR OTHER DEALINGS WITH THE SOFTWARE.
 #include <stdlib.h>
 #include <cuda_runtime.h>
 #include <cuComplex.h>
-#include "cusparse_ops.hxx"
+#include "ops_device.hxx"
 #include <stddef.h>
 #include <sys/time.h>
 #include <sys/resource.h>
