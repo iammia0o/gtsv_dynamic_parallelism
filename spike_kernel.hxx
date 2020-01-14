@@ -22,7 +22,6 @@ OR THE USE OR OTHER DEALINGS WITH THE SOFTWARE.
 
 *******************************************************************************************************/
 
-#include "cuComplex.h"
 #include "ops_device.hxx"
 
 
