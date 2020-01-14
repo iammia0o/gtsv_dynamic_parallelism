@@ -121,10 +121,10 @@ void compare_result
 				t=0;
 			for(int i=0;i<len;i++)
 			{
-				T diff = cuSub(x[k*m+j*len+i], y[k*m+j*len+i]);
-				err = cuReal( cuMul(diff, cuConj(diff) ));
+				DOUBLE diff = cuSub(x[k*m+j*len+i], y[k*m+j*len+i]);
+				err =  cuMul(diff, diff);
 				sum_err +=err;
-				x_2= cuReal( cuMul(x[k*m+j*len+i], cuConj(x[k*m+j*len+i])));
+				x_2= cuMul(x[k*m+j*len+i], x[k*m+j*len+i]);
 				total_sum+=x_2;
 				
 				//avoid overflow in error check
@@ -133,7 +133,7 @@ void compare_result
 				{
 					if(p<p_bound)
 					{
-						printf("!!!!!!ERROR happen at system %d element %d  cpu %lf and gpu %lf at %d\n",j,i, cuReal(x[k*m+j*len+i]),cuReal(y[k*m+j*len+i]),i%tx);
+						printf("!!!!!!ERROR happen at system %d element %d  cpu %lf and gpu %lf at %d\n",j,i, (x[k*m+j*len+i]), (y[k*m+j*len+i]),i%tx);
 						printf("!!!!!!its abs err us %le and rel err is %le\n",err,r_err);
 					}
 					p++;
@@ -141,7 +141,7 @@ void compare_result
 				
 				if(t<16 )
 				{
-					printf("check happen at system %d element %d  cpu %lf and gpu %lf\n",j,i,cuReal(x[k*m+j*len+i]),cuReal(y[k*m+j*len+i]));
+					printf("check happen at system %d element %d  cpu %lf and gpu %lf\n",j,i, (x[k*m+j*len+i]), (y[k*m+j*len+i]));
 					t++;
 				}
 			}
@@ -273,7 +273,7 @@ int main(int argc, char *argv[])
 	printf ( "matrix size = %d and rhs is %d \n", m,k);
     
 	printf("double test_gtsv testing\n");
-	test_gtsv_v1<double,double>(m);	
+	test_gtsv_v1(m);	
     printf("END double test_gtsv testing\n");
 	
 	// printf("double test_gtsv multiple rhs testing\n");
