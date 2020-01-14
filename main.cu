@@ -44,9 +44,9 @@ static double get_second (void)
 }
 
 
-void gtsv_spike_partial_diag_pivot(const DOUBLE* dl, const DOUBLE* d, const DOUBLE* du, DOUBLE* b,const int m,const int k);
+void gtsv_spike_partial_diag_pivot_v1(const DOUBLE* dl, const DOUBLE* d, const DOUBLE* du, DOUBLE* b,const int m);
 
-void dtsvb_spike_v1(const DOUBLE* dl, const DOUBLE* d, const DOUBLE* du, DOUBLE* b,const int m);
+// void dtsvb_spike_v1(const DOUBLE* dl, const DOUBLE* d, const DOUBLE* du, DOUBLE* b,const int m);
 
 
 //utility
@@ -234,7 +234,7 @@ void test_gtsv_v1(int m)
 
 	//this is for general matrix
     start = get_second();
-    gtsv_spike_partial_diag_pivot( dl, d, du, b,m,1);
+    gtsv_spike_partial_diag_pivot_v1( dl, d, du, b,m);
     cudaDeviceSynchronize();
 	stop = get_second();
     printf("test_gtsv_v1 m=%d time=%.6f\n", m, stop-start);    
