@@ -93,7 +93,9 @@ void compare_result
 	const DOUBLE abs_err,
 	const DOUBLE re_err,
 	const int p_bound,
-	const int k_bound
+	const int k_bound,
+	const int tx
+ 
 )
 {
 	int m = len*sys_num;
