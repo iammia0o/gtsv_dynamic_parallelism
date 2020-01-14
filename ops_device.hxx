@@ -86,6 +86,42 @@ static __inline__ __device__ __host__  double cuAbs( double x )
  __inline__ __device__ __host__  double cuGet(int x)
 {
     return double(x);
+
 }
+
+template <typename T_ELEM> struct __dynamic_shmem__{
+    __device__ T_ELEM * getPtr() { 
+        extern __device__ void error(void);
+        error();
+        return NULL;
+    }
+}; 
+/* specialization of the above structure for the desired types */
+template <> struct __dynamic_shmem__<float>{
+    __device__ float * getPtr() { 
+        extern __shared__ float Sptr[];
+        return Sptr;
+    }
+};
+template <> struct __dynamic_shmem__<double>{
+    __device__ double * getPtr() { 
+        extern __shared__ double Dptr[];
+        return Dptr;
+    }
+};
+
+template <> struct __dynamic_shmem__<cuComplex>{
+    __device__ cuComplex * getPtr() { 
+        extern __shared__ cuComplex Cptr[];
+        return Cptr;
+    }
+};
+template <> struct __dynamic_shmem__<cuDoubleComplex>{
+    __device__ cuDoubleComplex * getPtr() { 
+        extern __shared__ cuDoubleComplex Zptr[];
+        return Zptr;
+    }
+};
+
 
 #endif
