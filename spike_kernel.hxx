@@ -179,7 +179,7 @@ __global__ void tiled_diag_pivot_x1(
 			
 			if( cuMul(cuAbs(b_k),sgema) >= cuMul( kia, cuMul(cuAbs(c_k), cuAbs(a_k_1)) ))
 			{    
-                T_ELEM b_inv = cuDiv( cuGet<T_ELEM>(1), b_k);
+                T_ELEM b_inv = cuDiv( cuGet(1), b_k);
 				//write back
 				flag[ix]=true;
 				
@@ -209,17 +209,17 @@ __global__ void tiled_diag_pivot_x1(
 						c_k   = c_k_1;		  //k+1
 						c_k_1 = c[ix+b_dim];  //k+2
 						
-						a_k_2 = k< (stride-3) ? a[ix+2*b_dim] : cuGet<T_ELEM>(0); //k+3
+						a_k_2 = k< (stride-3) ? a[ix+2*b_dim] : cuGet(0); //k+3
 						
 					}
 					else			//k =stride -2
 					{
-						b_k_1 = cuGet<T_ELEM>(0);
-						a_k_1 = cuGet<T_ELEM>(0);
-						x_k_1 = cuGet<T_ELEM>(0);
-						c_k   = cuGet<T_ELEM>(0);
-						c_k_1 = cuGet<T_ELEM>(0);
-						a_k_2 = cuGet<T_ELEM>(0);
+						b_k_1 = cuGet(0);
+						a_k_1 = cuGet(0);
+						x_k_1 = cuGet(0);
+						c_k   = cuGet(0);
+						c_k_1 = cuGet(0);
+						a_k_2 = cuGet(0);
 					}
 				}
 				else		//k=stride -1
@@ -235,7 +235,7 @@ __global__ void tiled_diag_pivot_x1(
 				T_ELEM delta;
 								
                 delta = cuFma( b_k, b_k_1, cuNeg(cuMul(c_k,a_k_1)) );
-				delta = cuDiv( cuGet<T_ELEM>(1) , delta );				                
+				delta = cuDiv( cuGet(1) , delta );				                
                 x[ix] = cuFma( x_k, b_k_1, cuNeg( cuMul(c_k,x_k_1))); //k
                 x[ix] = cuMul( x[ix], delta);
                 
@@ -271,16 +271,16 @@ __global__ void tiled_diag_pivot_x1(
 						c_k_1 = c[ix+b_dim];  //k_3
 						//x_k_1 = d[ix+b_dim];  //k+3
                         x_k_1 = x[ix+b_dim];  //k+3
-						a_k_2 = k<stride-4? a[ix+2*b_dim] : cuGet<T_ELEM>(0);
+						a_k_2 = k<stride-4? a[ix+2*b_dim] : cuGet(0);
 					}
 					else		//k=stride-3
 					{
-						b_k_1 = cuGet<T_ELEM>(0);
-						a_k_1 = cuGet<T_ELEM>(0);
-						c_k   = cuGet<T_ELEM>(0);
-						c_k_1 = cuGet<T_ELEM>(0);
-						x_k_1 = cuGet<T_ELEM>(0);
-						a_k_2 = cuGet<T_ELEM>(0);
+						b_k_1 = cuGet(0);
+						a_k_1 = cuGet(0);
+						c_k   = cuGet(0);
+						c_k_1 = cuGet(0);
+						x_k_1 = cuGet(0);
+						a_k_2 = cuGet(0);
 					}
 				}
 				else		////k=stride -2
@@ -348,7 +348,7 @@ __global__ void tiled_diag_pivot_x1(
 				b_k_1 = b_buffer[ix];
 				c_k_1 = c[ix];
                 delta = cuFma( b_k, b_k_1, cuNeg(cuMul(c_k,a_k_1)) );
-				delta = cuDiv( cuGet<T_ELEM>(1) , delta );	                
+				delta = cuDiv( cuGet(1) , delta );	                
                 
                 T_ELEM prod = cuMul(c_k_1 , cuMul(b_k , delta));
                 
@@ -421,7 +421,7 @@ __global__ void tiled_diag_pivot_x32(
 
 			if( flag[iy])
 			{    
-                T_ELEM b_inv = cuDiv( cuGet<T_ELEM>(1), b_k);
+                T_ELEM b_inv = cuDiv( cuGet(1), b_k);
 				x_k = cuMul( x_k, b_inv );
 				x[ix] = x_k;		//k
 				
@@ -442,8 +442,8 @@ __global__ void tiled_diag_pivot_x32(
 					}
 					else			//k =stride -2
 					{
-						a_k_1 = cuGet<T_ELEM>(0);
-						x_k_1 = cuGet<T_ELEM>(0);
+						a_k_1 = cuGet(0);
+						x_k_1 = cuGet(0);
 						
 
 					}
@@ -454,7 +454,7 @@ __global__ void tiled_diag_pivot_x32(
 			{		
 				T_ELEM delta;
                 delta = cuFma( b_k, b_k_1, cuNeg(cuMul(c_k,a_k_1)) );
-				delta = cuDiv( cuGet<T_ELEM>(1) , delta );				                
+				delta = cuDiv( cuGet(1) , delta );				                
                 x[ix] = cuFma( x_k, b_k_1, cuNeg( cuMul(c_k,x_k_1))); //k
                 x[ix] = cuMul( x[ix], delta);
                 x_k_1 = cuFma( b_k,x_k_1, cuNeg(cuMul(a_k_1,x_k))); //k+1
@@ -478,8 +478,8 @@ __global__ void tiled_diag_pivot_x32(
 					}
 					else		//k=stride-3
 					{
-						a_k_1 = cuGet<T_ELEM>(0);
-						x_k_1 = cuGet<T_ELEM>(0);
+						a_k_1 = cuGet(0);
+						x_k_1 = cuGet(0);
 					}
 					     
 				}
@@ -531,7 +531,7 @@ __global__ void tiled_diag_pivot_x32(
 				b_k_1 = b[iy];
 				c_k_1 = c[iy];
                 delta = cuFma( b_k, b_k_1, cuNeg(cuMul(c_k,a_k_1)) );
-				delta = cuDiv( cuGet<T_ELEM>(1) , delta );	                
+				delta = cuDiv( cuGet(1) , delta );	                
                 
                 T_ELEM prod = cuMul(c_k_1 , cuMul(b_k , delta));
                 
@@ -613,9 +613,9 @@ const int stride  //stride per thread
 			index = scaler*tx+scaler/2-1;
 			up_index= scaler*tx;
 			down_index = scaler*tx + scaler-1;
-			T det = cuGet<T>(1);
+			T det = cuGet(1);
 			det = cuFma( cuNeg(sh_v[index+b_dim]), sh_w[index+1], det);
-			det = cuDiv( cuGet<T>(1) , det);
+			det = cuDiv( cuGet(1) , det);
 			
 			T d1,d2;
 			d1 = sh_x[index+b_dim];
@@ -784,9 +784,9 @@ const int len
 			index = scaler*ix+scaler/2-1;
 			up_index= scaler*ix;
 			down_index = scaler*ix + scaler-1;
-			T det = cuGet<T>(1);
+			T det = cuGet(1);
 			det = cuFma( cuNeg(sh_v[index+len]), sh_w[index+1], det);
-			det = cuDiv( cuGet<T>(1) , det);			
+			det = cuDiv( cuGet(1) , det);			
             
             
 			T d1,d2;
@@ -918,9 +918,9 @@ __global__ void spike_GPU_local_solving_x1(
 	if(tx<1)
 	{
 		int g_dim=gridDim.x;
-		sh_x[0]=bx>0?x_mirror[bx-1+g_dim]: cuGet<T>(0);
+		sh_x[0]=bx>0?x_mirror[bx-1+g_dim]: cuGet(0);
 		
-		sh_x[2*b_dim+1]=bx<g_dim-1?x_mirror[bx+1]: cuGet<T>(0);
+		sh_x[2*b_dim+1]=bx<g_dim-1?x_mirror[bx+1]: cuGet(0);
 		
 		sh_x[b_dim+1]=x_mirror[bx];
 		sh_x[b_dim]=x_mirror[bx+g_dim];
@@ -1022,13 +1022,13 @@ const int stride
 		int g_dim=gridDim.x;
 		if(tx==0)
 		{
-			x_up   = bx>0 ? x_mirror[bx-1+g_dim]:cuGet<T>(0);
+			x_up   = bx>0 ? x_mirror[bx-1+g_dim]:cuGet(0);
 			x_down = x[base+tx+1];
 		}
 		else
 		{
 			x_up   = x[base+tx-1+(stride-1)*b_dim];
-			x_down = bx<g_dim-1?x_mirror[bx+1]:cuGet<T>(0);
+			x_down = bx<g_dim-1?x_mirror[bx+1]:cuGet(0);
 		}
 	}
 	

@@ -95,8 +95,7 @@ OR THE USE OR OTHER DEALINGS WITH THE SOFTWARE.
 // 	const T_REAL re_err,
 // 	const int p_bound,
 // 	const int k_bound,
-// 	const int tx  //for debug
-
+ 
 // )
 // {
 // 	int m = len*sys_num;
