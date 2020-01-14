@@ -143,10 +143,10 @@ void gtsv_spike_partial_diag_pivot_v1(const DOUBLE* dl, const DOUBLE* d, const D
 	//kernels 
 	
 	//data layout transformation
-	foward_marshaling_bxb<T><<<g_data ,b_data, marshaling_share_size >>>(dl_buffer, dl, stride, b_dim,m, cuGet(0));
-	foward_marshaling_bxb<T><<<g_data ,b_data, marshaling_share_size >>>(d_buffer,  d,  stride, b_dim,m, cuGet(1));
-	foward_marshaling_bxb<T><<<g_data ,b_data, marshaling_share_size >>>(du_buffer, du, stride, b_dim,m, cuGet(0));
-	foward_marshaling_bxb<T><<<g_data ,b_data, marshaling_share_size >>>(b_buffer,  b,  stride, b_dim,m, cuGet(0));
+	foward_marshaling_bxb<DOUBLE><<<g_data ,b_data, marshaling_share_size >>>(dl_buffer, dl, stride, b_dim,m, cuGet(0));
+	foward_marshaling_bxb<DOUBLE><<<g_data ,b_data, marshaling_share_size >>>(d_buffer,  d,  stride, b_dim,m, cuGet(1));
+	foward_marshaling_bxb<DOUBLE><<<g_data ,b_data, marshaling_share_size >>>(du_buffer, du, stride, b_dim,m, cuGet(0));
+	foward_marshaling_bxb<DOUBLE><<<g_data ,b_data, marshaling_share_size >>>(b_buffer,  b,  stride, b_dim,m, cuGet(0));
 	 
 	//partitioned solver
 	//tiled_diagonal_pivoting<<<s,b_dim>>>( x,w,v,c2_buffer,flag, dl,d,du,b, stride,tile);
