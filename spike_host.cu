@@ -29,16 +29,16 @@ OR THE USE OR OTHER DEALINGS WITH THE SOFTWARE.
 
 #include "spike_kernel.hxx"
 
-template <typename T> void findBestGrid( int m, int tile_marshal, int *p_m_pad, int *p_b_dim, int *p_s, int *p_stride)
+template <typename DOUBLE> void findBestGrid( int m, int tile_marshal, int *p_m_pad, int *p_b_dim, int *p_s, int *p_stride)
 {
     int b_dim, m_pad, s, stride;
     int B_DIM_MAX, S_MAX;
     
-    if ( sizeof(T) == 4) {
+    if ( sizeof(DOUBLE) == 4) {
         B_DIM_MAX = 256;
         S_MAX     = 512;    
     }
-    else if (sizeof(T) == 8){ /* double and complex */
+    else if (sizeof(DOUBLE) == 8){ /* double and complex */
         B_DIM_MAX = 128;
         S_MAX     = 256;     
     }
@@ -82,22 +82,21 @@ template <typename T> void findBestGrid( int m, int tile_marshal, int *p_m_pad, 
 }
 
 
-template <typename T, typename T_REAL> 
-void gtsv_spike_partial_diag_pivot_v1(const T* dl, const T* d, const T* du, T* b,const int m)
+void gtsv_spike_partial_diag_pivot_v1(const DOUBLE* dl, const DOUBLE* d, const DOUBLE* du, DOUBLE* b,const int m)
 {
 
 
-	cudaFuncSetCacheConfig(tiled_diag_pivot_x1<T,T_REAL>,cudaFuncCachePreferL1);
-	cudaFuncSetCacheConfig(spike_GPU_back_sub_x1<T>,cudaFuncCachePreferL1);
+	cudaFuncSetCacheConfig(tiled_diag_pivot_x1<DOUBLE,DOUBLE>,cudaFuncCachePreferL1);
+	cudaFuncSetCacheConfig(spike_GPU_back_sub_x1<DOUBLE>,cudaFuncCachePreferL1);
 	//parameter declaration
 	int s; //griddim.x
 	int stride;
 	int b_dim, m_pad;
 	int tile = 128;
 	int tile_marshal = 16;
-	int T_size = sizeof(T);
+	int T_size = sizeof(DOUBLE);
     
-    findBestGrid<T>( m, tile_marshal, &m_pad, &b_dim, &s, &stride);
+    findBestGrid<DOUBLE>( m, tile_marshal, &m_pad, &b_dim, &s, &stride);
    
     printf("m=%d m_pad=%d s=%d b_dim=%d stride=%d\n", m, m_pad, s, b_dim, stride);    
 	    	
@@ -111,17 +110,17 @@ void gtsv_spike_partial_diag_pivot_v1(const T* dl, const T* d, const T* du, T* b
 	dim3 b_data(tile_marshal,tile_marshal);
 	
 	bool* flag; // tag for pivoting
-    T* dl_buffer;   //dl buffer
-	T* d_buffer;    //b
-	T* du_buffer; 
-	T* b_buffer;
-	T* w_buffer;
-	T* v_buffer;
-	T* c2_buffer;
+    DOUBLE* dl_buffer;   //dl buffer
+	DOUBLE* d_buffer;    //b
+	DOUBLE* du_buffer; 
+	DOUBLE* b_buffer;
+	DOUBLE* w_buffer;
+	DOUBLE* v_buffer;
+	DOUBLE* c2_buffer;
 	
-	T* x_level_2;
-	T* w_level_2;
-	T* v_level_2;
+	DOUBLE* x_level_2;
+	DOUBLE* w_level_2;
+	DOUBLE* v_level_2;
 	
 	
 	//buffer allocation
