@@ -150,7 +150,7 @@ void gtsv_spike_partial_diag_pivot_v1(const DOUBLE* dl, const DOUBLE* d, const D
 	 
 	//partitioned solver
 	//tiled_diagonal_pivoting<<<s,b_dim>>>( x,w,v,c2_buffer,flag, dl,d,du,b, stride,tile);
-	tiled_diag_pivot_x1<T,T_REAL><<<s,b_dim>>>(b_buffer, w_buffer, v_buffer, c2_buffer, flag, dl_buffer, d_buffer, du_buffer, stride, tile);
+	tiled_diag_pivot_x1<DOUBLE,DOUBLE><<<s,b_dim>>>(b_buffer, w_buffer, v_buffer, c2_buffer, flag, dl_buffer, d_buffer, du_buffer, stride, tile);
 	
 	
 	//SPIKE solver
