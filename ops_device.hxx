@@ -110,18 +110,7 @@ template <> struct __dynamic_shmem__<double>{
     }
 };
 
-template <> struct __dynamic_shmem__<cuComplex>{
-    __device__ cuComplex * getPtr() { 
-        extern __shared__ cuComplex Cptr[];
-        return Cptr;
-    }
-};
-template <> struct __dynamic_shmem__<cuDoubleComplex>{
-    __device__ cuDoubleComplex * getPtr() { 
-        extern __shared__ cuDoubleComplex Zptr[];
-        return Zptr;
-    }
-};
+
 
 
 #endif
