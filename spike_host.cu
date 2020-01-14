@@ -29,7 +29,8 @@ OR THE USE OR OTHER DEALINGS WITH THE SOFTWARE.
 
 #include "spike_kernel.hxx"
 
-template <typename DOUBLE> void findBestGrid( int m, int tile_marshal, int *p_m_pad, int *p_b_dim, int *p_s, int *p_stride)
+
+void findBestGrid( int m, int tile_marshal, int *p_m_pad, int *p_b_dim, int *p_s, int *p_stride)
 {
     int b_dim, m_pad, s, stride;
     int B_DIM_MAX, S_MAX;
@@ -96,7 +97,7 @@ void gtsv_spike_partial_diag_pivot_v1(const DOUBLE* dl, const DOUBLE* d, const D
 	int tile_marshal = 16;
 	int T_size = sizeof(DOUBLE);
     
-    findBestGrid<DOUBLE>( m, tile_marshal, &m_pad, &b_dim, &s, &stride);
+    findBestGrid( m, tile_marshal, &m_pad, &b_dim, &s, &stride);
    
     printf("m=%d m_pad=%d s=%d b_dim=%d stride=%d\n", m, m_pad, s, b_dim, stride);    
 	    	
