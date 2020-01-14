@@ -34,6 +34,7 @@ OR THE USE OR OTHER DEALINGS WITH THE SOFTWARE.
 #include <sys/sysinfo.h>
 
 #define DEBUG 0
+#define DOUBLE double
 
 static double get_second (void)
 {
