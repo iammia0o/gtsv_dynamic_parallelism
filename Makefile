@@ -25,7 +25,7 @@ OBJS= main.o  spike_host.o
 # flags
 CFLAGS=
 CPPFLAGS= -O3
-NVFLAGS= -arch=sm_20 --ptxas-options=-v -Xptxas -dlcm=ca -O3
+NVFLAGS= -arch=sm_61 --ptxas-options=-v -Xptxas -dlcm=ca -O3
 
 # final output
 BIN=bin

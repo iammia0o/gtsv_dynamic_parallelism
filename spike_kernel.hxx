@@ -23,7 +23,7 @@ OR THE USE OR OTHER DEALINGS WITH THE SOFTWARE.
 *******************************************************************************************************/
 
 #include "cuComplex.h"
-#include "cusparse_ops.hxx"
+#include "ops_device.hxx"
 
 
 //Data layout transformation for inputs
