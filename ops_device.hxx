@@ -19,6 +19,8 @@
  
 #ifndef _CUSPARSE_OPS_HXX_
 #define _CUSPARSE_OPS_HXX_
+#define DOUBLE double
+
 
 /* Multiplication */
 
