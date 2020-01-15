@@ -37,7 +37,7 @@ OR THE USE OR OTHER DEALINGS WITH THE SOFTWARE.
 
 #define DEBUG 0
 
-static double get_second (void)
+static __device__ double get_second (void)
 {
     struct timeval tv;
     gettimeofday(&tv, NULL);
