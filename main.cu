@@ -165,7 +165,7 @@ void compare_result
 }
 
 
-__device__ cudaRand(){
+__device__ DOUBLE cudaRand(){
 	int tId = threadIdx.x + (blockIdx.x * blockDim.x);
 	curandState state;
 	curand_init((unsigned long long)clock() + tId, 0, 0, &state);
