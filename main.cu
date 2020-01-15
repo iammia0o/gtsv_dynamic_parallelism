@@ -183,8 +183,8 @@ void test_gtsv_v1(int m)
 	
 	//allocation
 	{		
-		h_x_gpu=(DOUBLE *)malloc(sizeof(DOUBLE)*m);
-		h_b_back=(DOUBLE *)malloc(sizeof(DOUBLE)*m);
+		// h_x_gpu=(DOUBLE *)malloc(sizeof(DOUBLE)*m);
+		// h_b_back=(DOUBLE *)malloc(sizeof(DOUBLE)*m);
 				
 		cudaMalloc((void **)&dl, sizeof(DOUBLE)*m); 
 		cudaMalloc((void **)&du, sizeof(DOUBLE)*m); 
