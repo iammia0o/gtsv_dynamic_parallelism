@@ -32,6 +32,8 @@ OR THE USE OR OTHER DEALINGS WITH THE SOFTWARE.
 #include <sys/time.h>
 #include <sys/resource.h>
 #include <sys/sysinfo.h>
+#include <curand_kernel.h>
+#include <ctime>
 
 #define DEBUG 0
 
@@ -162,6 +164,14 @@ void compare_result
 	printf("total rel error is %le\n",sqrt(sum_err)/sqrt(total_sum));
 }
 
+
+__device__ cudaRand(){
+	int tId = threadIdx.x + (blockIdx.x * blockDim.x);
+	curandState state;
+	curand_init((unsigned long long)clock() + tId, 0, 0, &state);
+	return curand_uniform_double(&state);
+}
+
 // This is a testing gtsv function
 __global__
 void test_gtsv_v1(int m)
@@ -201,21 +211,21 @@ void test_gtsv_v1(int m)
 	srand(54321);
 	//generate random data
 	dl[0]   = cuGet(0);
-	d[0]    = (rand()/(double)RAND_MAX)*2.0-1.0;
-	du[0]   = (rand()/(double)RAND_MAX)*2.0-1.0;
-	dl[m-1] = (rand()/(double)RAND_MAX)*2.0-1.0;
-	d[m-1]  = (rand()/(double)RAND_MAX)*2.0-1.0;
+	d[0]    = (cudaRand()/(double)RAND_MAX)*2.0-1.0;
+	du[0]   = (cudaRand()/(double)RAND_MAX)*2.0-1.0;
+	dl[m-1] = (cudaRand()/(double)RAND_MAX)*2.0-1.0;
+	d[m-1]  = (cudaRand()/(double)RAND_MAX)*2.0-1.0;
 	du[m-1] = cuGet(0);
 	
-	b[0]    = (rand()/(double)RAND_MAX)*2.0-1.0 ;
-	b[m-1]  =  (rand()/(double)RAND_MAX)*2.0-1.0 ;
+	b[0]    = (cudaRand()/(double)RAND_MAX)*2.0-1.0 ;
+	b[m-1]  =  (cudaRand()/(double)RAND_MAX)*2.0-1.0 ;
 	
 	for(k=1;k<m-1;k++)
 	{
-		dl[k] =(rand()/(double)RAND_MAX)*2.0-1.0;
-		du[k] =(rand()/(double)RAND_MAX)*2.0-1.0;
-		d[k]  =(rand()/(double)RAND_MAX)*2.0-1.0;
-		b[k]  =(rand()/(double)RAND_MAX)*2.0-1.0;
+		dl[k] =(cudaRand()/(double)RAND_MAX)*2.0-1.0;
+		du[k] =(cudaRand()/(double)RAND_MAX)*2.0-1.0;
+		d[k]  =(cudaRand()/(double)RAND_MAX)*2.0-1.0;
+		b[k]  =(cudaRand()/(double)RAND_MAX)*2.0-1.0;
 	}
 	
 
