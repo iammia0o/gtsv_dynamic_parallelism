@@ -42,7 +42,7 @@ static double get_second (void)
     return (double)tv.tv_sec + (double)tv.tv_usec / 1000000.0;
 }
 
-
+__device__
 void gtsv_spike_partial_diag_pivot_v1(const DOUBLE* dl, const DOUBLE* d, const DOUBLE* du, DOUBLE* b,const int m);
 
 // void dtsvb_spike_v1(const DOUBLE* dl, const DOUBLE* d, const DOUBLE* du, DOUBLE* b,const int m);
@@ -51,7 +51,8 @@ void gtsv_spike_partial_diag_pivot_v1(const DOUBLE* dl, const DOUBLE* d, const D
 //utility
 #define EPS 1e-20
 
-
+__device__
+mv_test(h_b_back,h_dl,h_d,h_du,h_x_gpu,1,m,1);
 void mv_test
 (
 	DOUBLE* x,
@@ -81,7 +82,7 @@ void mv_test
 }
 
 
-
+__device__
 void compare_result
 (
 	const DOUBLE *x,
@@ -163,17 +164,17 @@ void compare_result
 }
 
 // This is a testing gtsv function
-
+__global__
 void test_gtsv_v1(int m)
 {
 	double start,stop;
-	DOUBLE *h_dl;
-	DOUBLE *h_d;
-	DOUBLE *h_du;
-	DOUBLE *h_b;
+	// DOUBLE *h_dl;
+	// DOUBLE *h_d;
+	// DOUBLE *h_du;
+	// DOUBLE *h_b;
 	
-	DOUBLE *h_x_gpu;
-	DOUBLE *h_b_back;
+	// DOUBLE *h_x_gpu;
+	// DOUBLE *h_b_back;
 
 	DOUBLE *dl;
 	DOUBLE *d;
@@ -182,12 +183,7 @@ void test_gtsv_v1(int m)
 
 	
 	//allocation
-	{
-		h_dl=(DOUBLE *)malloc(sizeof(DOUBLE)*m);
-		h_du=(DOUBLE *)malloc(sizeof(DOUBLE)*m);
-		h_d=(DOUBLE *)malloc(sizeof(DOUBLE)*m);
-		h_b=(DOUBLE *)malloc(sizeof(DOUBLE)*m);
-		
+	{		
 		h_x_gpu=(DOUBLE *)malloc(sizeof(DOUBLE)*m);
 		h_b_back=(DOUBLE *)malloc(sizeof(DOUBLE)*m);
 				
@@ -202,34 +198,28 @@ void test_gtsv_v1(int m)
 	}
 	
 
-	
 	int k;
 	srand(54321);
 	//generate random data
-	h_dl[0]   = cuGet(0);
-	h_d[0]    = (rand()/(double)RAND_MAX)*2.0-1.0;
-	h_du[0]   = (rand()/(double)RAND_MAX)*2.0-1.0;
-	h_dl[m-1] = (rand()/(double)RAND_MAX)*2.0-1.0;
-	h_d[m-1]  = (rand()/(double)RAND_MAX)*2.0-1.0;
-	h_du[m-1] = cuGet(0);
+	dl[0]   = cuGet(0);
+	d[0]    = (rand()/(double)RAND_MAX)*2.0-1.0;
+	du[0]   = (rand()/(double)RAND_MAX)*2.0-1.0;
+	dl[m-1] = (rand()/(double)RAND_MAX)*2.0-1.0;
+	d[m-1]  = (rand()/(double)RAND_MAX)*2.0-1.0;
+	du[m-1] = cuGet(0);
 	
-	h_b[0]    = (rand()/(double)RAND_MAX)*2.0-1.0 ;
-	h_b[m-1]  =  (rand()/(double)RAND_MAX)*2.0-1.0 ;
+	b[0]    = (rand()/(double)RAND_MAX)*2.0-1.0 ;
+	b[m-1]  =  (rand()/(double)RAND_MAX)*2.0-1.0 ;
 	
 	for(k=1;k<m-1;k++)
 	{
-		h_dl[k] =(rand()/(double)RAND_MAX)*2.0-1.0;
-		h_du[k] =(rand()/(double)RAND_MAX)*2.0-1.0;
-		h_d[k]  =(rand()/(double)RAND_MAX)*2.0-1.0;
-		h_b[k]  =(rand()/(double)RAND_MAX)*2.0-1.0;
+		dl[k] =(rand()/(double)RAND_MAX)*2.0-1.0;
+		du[k] =(rand()/(double)RAND_MAX)*2.0-1.0;
+		d[k]  =(rand()/(double)RAND_MAX)*2.0-1.0;
+		b[k]  =(rand()/(double)RAND_MAX)*2.0-1.0;
 	}
 	
-	
-   //Memory copy
-	cudaMemcpy(dl, h_dl, m*sizeof(DOUBLE), cudaMemcpyHostToDevice);
-	cudaMemcpy(d, h_d, m*sizeof(DOUBLE), cudaMemcpyHostToDevice);
-	cudaMemcpy(du, h_du, m*sizeof(DOUBLE), cudaMemcpyHostToDevice);
-	cudaMemcpy(b, h_b, m*sizeof(DOUBLE), cudaMemcpyHostToDevice);
+
 
 	//this is for general matrix
     start = get_second();
@@ -239,15 +229,97 @@ void test_gtsv_v1(int m)
     printf("test_gtsv_v1 m=%d time=%.6f\n", m, stop-start);    
 
   	//copy back 
-	cudaMemcpy(h_x_gpu, b, m*sizeof(DOUBLE), cudaMemcpyDeviceToHost);
+	// cudaMemcpy(h_x_gpu, b, m*sizeof(DOUBLE), cudaMemcpyDeviceToHost);
 
-    mv_test(h_b_back,h_dl,h_d,h_du,h_x_gpu,1,m,1);
-    //backward error check
-	int b_dim=128;  //for debug
-	compare_result(h_b,h_b_back,1,m,1,1e-10,1e-10,50,3,b_dim);
+ //    mv_test(h_b_back,h_dl,h_d,h_du,h_x_gpu,1,m,1);
+ //    //backward error check
+	// int b_dim=128;  //for debug
+	// compare_result(h_b,h_b_back,1,m,1,1e-10,1e-10,50,3,b_dim);
 }
 
 
+
+// void test_gtsv_v1(int m)
+// {
+// 	double start,stop;
+// 	DOUBLE *h_dl;
+// 	DOUBLE *h_d;
+// 	DOUBLE *h_du;
+// 	DOUBLE *h_b;
+	
+// 	DOUBLE *h_x_gpu;
+// 	DOUBLE *h_b_back;
+
+// 	DOUBLE *dl;
+// 	DOUBLE *d;
+// 	DOUBLE *du;
+// 	DOUBLE *b;
+
+	
+// 	//allocation
+// 	{
+// 		h_dl=(DOUBLE *)malloc(sizeof(DOUBLE)*m);
+// 		h_du=(DOUBLE *)malloc(sizeof(DOUBLE)*m);
+// 		h_d=(DOUBLE *)malloc(sizeof(DOUBLE)*m);
+// 		h_b=(DOUBLE *)malloc(sizeof(DOUBLE)*m);
+		
+// 		h_x_gpu=(DOUBLE *)malloc(sizeof(DOUBLE)*m);
+// 		h_b_back=(DOUBLE *)malloc(sizeof(DOUBLE)*m);
+				
+// 		cudaMalloc((void **)&dl, sizeof(DOUBLE)*m); 
+// 		cudaMalloc((void **)&du, sizeof(DOUBLE)*m); 
+// 		cudaMalloc((void **)&d, sizeof(DOUBLE)*m); 
+// 		cudaMalloc((void **)&b, sizeof(DOUBLE)*m); 
+
+// 		cudaMemset(d, 0, m * sizeof(DOUBLE));
+// 		cudaMemset(dl, 0, m * sizeof(DOUBLE));
+// 		cudaMemset(du, 0, m * sizeof(DOUBLE));
+// 	}
+	
+
+// 	int k;
+// 	srand(54321);
+// 	//generate random data
+// 	h_dl[0]   = cuGet(0);
+// 	h_d[0]    = (rand()/(double)RAND_MAX)*2.0-1.0;
+// 	h_du[0]   = (rand()/(double)RAND_MAX)*2.0-1.0;
+// 	h_dl[m-1] = (rand()/(double)RAND_MAX)*2.0-1.0;
+// 	h_d[m-1]  = (rand()/(double)RAND_MAX)*2.0-1.0;
+// 	h_du[m-1] = cuGet(0);
+	
+// 	h_b[0]    = (rand()/(double)RAND_MAX)*2.0-1.0 ;
+// 	h_b[m-1]  =  (rand()/(double)RAND_MAX)*2.0-1.0 ;
+	
+// 	for(k=1;k<m-1;k++)
+// 	{
+// 		h_dl[k] =(rand()/(double)RAND_MAX)*2.0-1.0;
+// 		h_du[k] =(rand()/(double)RAND_MAX)*2.0-1.0;
+// 		h_d[k]  =(rand()/(double)RAND_MAX)*2.0-1.0;
+// 		h_b[k]  =(rand()/(double)RAND_MAX)*2.0-1.0;
+// 	}
+	
+	
+//    //Memory copy
+// 	cudaMemcpy(dl, h_dl, m*sizeof(DOUBLE), cudaMemcpyHostToDevice);
+// 	cudaMemcpy(d, h_d, m*sizeof(DOUBLE), cudaMemcpyHostToDevice);
+// 	cudaMemcpy(du, h_du, m*sizeof(DOUBLE), cudaMemcpyHostToDevice);
+// 	cudaMemcpy(b, h_b, m*sizeof(DOUBLE), cudaMemcpyHostToDevice);
+
+// 	//this is for general matrix
+//     start = get_second();
+//     gtsv_spike_partial_diag_pivot_v1( dl, d, du, b,m);
+//     cudaDeviceSynchronize();
+// 	stop = get_second();
+//     printf("test_gtsv_v1 m=%d time=%.6f\n", m, stop-start);    
+
+//   	//copy back 
+// 	cudaMemcpy(h_x_gpu, b, m*sizeof(DOUBLE), cudaMemcpyDeviceToHost);
+
+//     mv_test(h_b_back,h_dl,h_d,h_du,h_x_gpu,1,m,1);
+//     //backward error check
+// 	int b_dim=128;  //for debug
+// 	compare_result(h_b,h_b_back,1,m,1,1e-10,1e-10,50,3,b_dim);
+// }
 
 
 
@@ -273,29 +345,9 @@ int main(int argc, char *argv[])
 	printf ( "matrix size = %d and rhs is %d \n", m,k);
     
 	printf("double test_gtsv testing\n");
-	test_gtsv_v1(m);	
+	test_gtsv_v1<<<1, 32>>>(m);	
     printf("END double test_gtsv testing\n");
-	
-	// printf("double test_gtsv multiple rhs testing\n");
-	// test_gtsv_v_few<double,double>(m,k);
- //    printf("END double test_gtsv multiple rhs testing\n");
-	
-	/*
-    printf("Double complex test_gtsv 5 rhs testing\n");    
-	test_gtsv_v_few<cuDoubleComplex,double>(m,5);    
-    printf("END Double complex test_gtsv 5 rhs\n");
-    
-	
-	
-	printf("double test_dtsvb_v1 testing\n");
-	test_dtsvb_v1<double,double>(m);
-	
-	printf("double complex test_dtsvb_v1 testing\n");
-	test_dtsvb_v1<cuDoubleComplex,double>(m);
-	
-	*/	
-	//printf("float testing\n");
-	//test_dtsvb_v1<float>(m);
+
   
 	return 0;
 
