@@ -52,7 +52,6 @@ void gtsv_spike_partial_diag_pivot_v1(const DOUBLE* dl, const DOUBLE* d, const D
 #define EPS 1e-20
 
 __device__
-mv_test(h_b_back,h_dl,h_d,h_du,h_x_gpu,1,m,1);
 void mv_test
 (
 	DOUBLE* x,
