@@ -231,10 +231,10 @@ void test_gtsv_v1(int m)
 
 
 	//this is for general matrix
-    start = get_second();
+    // start = get_second();
     gtsv_spike_partial_diag_pivot_v1( dl, d, du, b,m);
     cudaDeviceSynchronize();
-	stop = get_second();
+	// stop = get_second();
     printf("test_gtsv_v1 m=%d time=%.6f\n", m, stop-start);    
 
   	//copy back 
