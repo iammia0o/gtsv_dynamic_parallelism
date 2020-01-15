@@ -196,19 +196,19 @@ void test_gtsv_v1(int m)
 		// h_x_gpu=(DOUBLE *)malloc(sizeof(DOUBLE)*m);
 		// h_b_back=(DOUBLE *)malloc(sizeof(DOUBLE)*m);
 				
-		cudaMalloc((void **)&dl, sizeof(DOUBLE)*m); 
-		cudaMalloc((void **)&du, sizeof(DOUBLE)*m); 
-		cudaMalloc((void **)&d, sizeof(DOUBLE)*m); 
-		cudaMalloc((void **)&b, sizeof(DOUBLE)*m); 
+		malloc((void **)&dl, sizeof(DOUBLE)*m); 
+		malloc((void **)&du, sizeof(DOUBLE)*m); 
+		malloc((void **)&d, sizeof(DOUBLE)*m); 
+		malloc((void **)&b, sizeof(DOUBLE)*m); 
 
-		cudaMemset(d, 0, m * sizeof(DOUBLE));
-		cudaMemset(dl, 0, m * sizeof(DOUBLE));
-		cudaMemset(du, 0, m * sizeof(DOUBLE));
+		memset(d, 0, m * sizeof(DOUBLE));
+		memset(dl, 0, m * sizeof(DOUBLE));
+		memset(du, 0, m * sizeof(DOUBLE));
 	}
 	
 
 	int k;
-	srand(54321);
+	// srand(54321);
 	//generate random data
 	dl[0]   = cuGet(0);
 	d[0]    = (cudaRand()/(double)RAND_MAX)*2.0-1.0;
