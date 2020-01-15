@@ -196,10 +196,10 @@ void test_gtsv_v1(int m)
 		// h_x_gpu=(DOUBLE *)malloc(sizeof(DOUBLE)*m);
 		// h_b_back=(DOUBLE *)malloc(sizeof(DOUBLE)*m);
 				
-		malloc((void **)&dl, sizeof(DOUBLE)*m); 
-		malloc((void **)&du, sizeof(DOUBLE)*m); 
-		malloc((void **)&d, sizeof(DOUBLE)*m); 
-		malloc((void **)&b, sizeof(DOUBLE)*m); 
+		dl = (DOUBLE*) malloc(sizeof(DOUBLE)*m); 
+		du = (DOUBLE*) malloc(sizeof(DOUBLE)*m); 
+		d = (DOUBLE*) malloc(sizeof(DOUBLE)*m); 
+		b = (DOUBLE*) malloc(sizeof(DOUBLE)*m); 
 
 		memset(d, 0, m * sizeof(DOUBLE));
 		memset(dl, 0, m * sizeof(DOUBLE));
