@@ -199,7 +199,7 @@ void test_gtsv_v1(int m)
 	DOUBLE *d;
 	DOUBLE *du;
 	DOUBLE *b;
-	
+
 
 	
 	//allocation
@@ -217,12 +217,11 @@ void test_gtsv_v1(int m)
 		cudaMalloc((void **)&d, sizeof(DOUBLE)*m); 
 		cudaMalloc((void **)&b, sizeof(DOUBLE)*m);
 
-		memset(d, 0, m * sizeof(DOUBLE));
+		// memset(d, 0, m * sizeof(DOUBLE));
 		// memset(dl, 0, m * sizeof(DOUBLE));
 		// memset(du, 0, m * sizeof(DOUBLE));
 	}
-	return;
-	
+
 
 	int k;
 	// srand(54321);
@@ -236,6 +235,9 @@ void test_gtsv_v1(int m)
 	
 	b[0]    = (cudaRand()/(double)RAND_MAX)*2.0-1.0 ;
 	b[m-1]  =  (cudaRand()/(double)RAND_MAX)*2.0-1.0 ;
+
+	return;
+	
 	
 	for(k=1;k<m-1;k++)
 	{
