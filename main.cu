@@ -378,7 +378,7 @@ int main(int argc, char *argv[])
     }
 	printf ( "matrix size = %d and rhs is %d \n", m,k);
 	size_t size;
-	cuCtxGetLimit(&size, CU_LIMIT_MALLOC_HEAP_SIZE);
+	cudaThreadGetLimit(&size,cudaLimitMallocHeapSize);
 	std::cout << "heap size = " <<  size <<std::endl;
     
 	printf("double test_gtsv testing\n");
