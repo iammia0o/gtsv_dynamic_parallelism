@@ -220,6 +220,7 @@ void test_gtsv_v1(int m)
 		memset(dl, 0, m * sizeof(DOUBLE));
 		memset(du, 0, m * sizeof(DOUBLE));
 	}
+	return;
 	
 
 	int k;
