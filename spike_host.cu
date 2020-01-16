@@ -28,6 +28,7 @@ OR THE USE OR OTHER DEALINGS WITH THE SOFTWARE.
 #include <cuda_runtime.h>
 
 #include "spike_kernel.hxx"
+#include <assert.h>
 
 __device__
 void findBestGrid( int m, int tile_marshal, int *p_m_pad, int *p_b_dim, int *p_s, int *p_stride)

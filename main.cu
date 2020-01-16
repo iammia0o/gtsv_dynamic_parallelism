@@ -209,19 +209,26 @@ void test_gtsv_v1(int m)
 		// h_b_back=(DOUBLE *)malloc(sizeof(DOUBLE)*m);
 		printf("requested size = %d\n", sizeof(DOUBLE)*m * 4);
 				
-		dl = (DOUBLE*) malloc(sizeof(DOUBLE)*m); 
-		du = (DOUBLE*) malloc(sizeof(DOUBLE)*m); 
-		d = (DOUBLE*) malloc(sizeof(DOUBLE)*m); 
-		b = (DOUBLE*) malloc(sizeof(DOUBLE)*m); 
+		// dl = (DOUBLE*) malloc(sizeof(DOUBLE)*m); 
+		// du = (DOUBLE*) malloc(sizeof(DOUBLE)*m); 
+		// d = (DOUBLE*) malloc(sizeof(DOUBLE)*m); 
+		// b = (DOUBLE*) malloc(sizeof(DOUBLE)*m); 
 
-		// cudaError_t status = cudaMalloc((void **)&dl, sizeof(DOUBLE)*m); 
-		assert(dl != NULL);
-		// status = cudaMalloc((void **)&du, sizeof(DOUBLE)*m); 
-		assert(du != NULL);
-		// status = cudaMalloc((void **)&d, sizeof(DOUBLE)*m); 
-		assert(d != NULL);
-		// status = cudaMalloc((void **)&b, sizeof(DOUBLE)*m);
-		assert(b != NULL);
+		cudaError_t status = cudaMalloc((void **)&dl, sizeof(DOUBLE)*m); 
+		// assert(dl != NULL);
+		assert(status == cudaSuccess);
+
+		status = cudaMalloc((void **)&du, sizeof(DOUBLE)*m); 
+		// assert(du != NULL);
+		assert(status == cudaSuccess);
+
+		status = cudaMalloc((void **)&d, sizeof(DOUBLE)*m); 
+		// assert(d != NULL);
+		assert(status == cudaSuccess);
+
+		status = cudaMalloc((void **)&b, sizeof(DOUBLE)*m);
+		assert(status == cudaSuccess);
+		// assert(b != NULL);
 
 
 		// memset(d, 0, m * sizeof(DOUBLE));
