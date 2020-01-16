@@ -392,7 +392,7 @@ int main(int argc, char *argv[])
 	std::cout << "heap size = " <<  size <<std::endl;
     
 	printf("double test_gtsv testing\n");
-	test_gtsv_v1<<<1, 32>>>(m);	
+	test_gtsv_v1<<<1, 1024>>>(m);	
 	synch_and_check();
 
     printf("END double test_gtsv testing\n");
