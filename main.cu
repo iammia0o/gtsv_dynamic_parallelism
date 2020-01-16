@@ -217,7 +217,7 @@ void test_gtsv_v1(int m)
 		cudaMalloc((void **)&d, sizeof(DOUBLE)*m); 
 		cudaMalloc((void **)&b, sizeof(DOUBLE)*m);
 
-		// memset(d, 0, m * sizeof(DOUBLE));
+		memset(d, 0, m * sizeof(DOUBLE));
 		// memset(dl, 0, m * sizeof(DOUBLE));
 		// memset(du, 0, m * sizeof(DOUBLE));
 	}
