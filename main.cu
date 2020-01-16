@@ -35,7 +35,7 @@ OR THE USE OR OTHER DEALINGS WITH THE SOFTWARE.
 #include <curand_kernel.h>
 #include <assert.h>
 #include <ctime>
-
+#include <iostream>
 #define DEBUG 0
 
 static __device__ double get_second (void)
@@ -377,7 +377,9 @@ int main(int argc, char *argv[])
 		}
     }
 	printf ( "matrix size = %d and rhs is %d \n", m,k);
-	std::cout << "heap size = " << cuCtxGetLimit(size_t*size, CU_LIMIT_MALLOC_HEAP_SIZE) <<std::endl;
+	size_t size;
+	cuCtxGetLimit(&size, CU_LIMIT_MALLOC_HEAP_SIZE);
+	std::cout << "heap size = " <<  size <<std::endl;
     
 	printf("double test_gtsv testing\n");
 	test_gtsv_v1<<<1, 32>>>(m);	
