@@ -243,7 +243,6 @@ void test_gtsv_v1(int m)
 	b[0]    = (cudaRand()/(double)RAND_MAX)*2.0-1.0 ;
 	b[m-1]  =  (cudaRand()/(double)RAND_MAX)*2.0-1.0 ;
 
-	return;
 
 	
 	for(k=1;k<m-1;k++)
@@ -258,10 +257,10 @@ void test_gtsv_v1(int m)
 
 	//this is for general matrix
     // start = get_second();
-    // gtsv_spike_partial_diag_pivot_v1( dl, d, du, b,m);
-    // cudaDeviceSynchronize();
+    gtsv_spike_partial_diag_pivot_v1( dl, d, du, b,m);
+    cudaDeviceSynchronize();
 	// stop = get_second();
-    printf("test_gtsv_v1 m=%d time=%.6f\n", m, stop-start);    
+    // printf("test_gtsv_v1 m=%d time=%.6f\n", m, stop-start);    
 
   	//copy back 
 	// cudaMemcpy(h_x_gpu, b, m*sizeof(DOUBLE), cudaMemcpyDeviceToHost);
