@@ -127,18 +127,29 @@ void gtsv_spike_partial_diag_pivot_v1(const DOUBLE* dl, const DOUBLE* d, const D
 	
 	
 	//buffer allocation
-	cudaMalloc((void **)&flag, sizeof(bool)*m_pad); 
-	cudaMalloc((void **)&dl_buffer, T_size*m_pad); 
-	cudaMalloc((void **)&d_buffer, T_size*m_pad); 
-	cudaMalloc((void **)&du_buffer, T_size*m_pad); 
-	cudaMalloc((void **)&b_buffer, T_size*m_pad); 
-	cudaMalloc((void **)&w_buffer, T_size*m_pad); 
-	cudaMalloc((void **)&v_buffer, T_size*m_pad); 
-	cudaMalloc((void **)&c2_buffer, T_size*m_pad); 
+	cudaError_t status =  cudaMalloc((void **)&flag, sizeof(bool)*m_pad); 
+	assert(status == cudaSuccess);
+	status = cudaMalloc((void **)&dl_buffer, T_size*m_pad); 
+	assert(status == cudaSuccess);
+	status = cudaMalloc((void **)&d_buffer, T_size*m_pad); 
+	assert(status == cudaSuccess);
+	status = cudaMalloc((void **)&du_buffer, T_size*m_pad); 
+	assert(status == cudaSuccess);
+	status = cudaMalloc((void **)&b_buffer, T_size*m_pad); 
+	assert(status == cudaSuccess);
+	status = cudaMalloc((void **)&w_buffer, T_size*m_pad); 
+	assert(status == cudaSuccess);
+	status = cudaMalloc((void **)&v_buffer, T_size*m_pad); 
+	assert(status == cudaSuccess);
+	status = cudaMalloc((void **)&c2_buffer, T_size*m_pad); 
+	assert(status == cudaSuccess);
 	
-	cudaMalloc((void **)&x_level_2, T_size*s*2); 
-	cudaMalloc((void **)&w_level_2, T_size*s*2); 
-	cudaMalloc((void **)&v_level_2, T_size*s*2); 
+	cudaMalloc((void **)&x_level_2, T_size*s*2);
+	assert(status == cudaSuccess);
+	cudaMalloc((void **)&w_level_2, T_size*s*2);
+	assert(status == cudaSuccess); 
+	cudaMalloc((void **)&v_level_2, T_size*s*2);
+	assert(status == cudaSuccess); 
 	
 	
 	

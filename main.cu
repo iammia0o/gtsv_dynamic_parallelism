@@ -229,8 +229,6 @@ void test_gtsv_v1(int m)
 		status = cudaMalloc((void **)&b, sizeof(DOUBLE)*m);
 		assert(status == cudaSuccess);
 		// assert(b != NULL);
-
-
 		// memset(d, 0, m * sizeof(DOUBLE));
 		// memset(dl, 0, m * sizeof(DOUBLE));
 		// memset(du, 0, m * sizeof(DOUBLE));
@@ -264,7 +262,7 @@ void test_gtsv_v1(int m)
 
 	//this is for general matrix
     // start = get_second();
-    // gtsv_spike_partial_diag_pivot_v1( dl, d, du, b,m);
+    gtsv_spike_partial_diag_pivot_v1( dl, d, du, b,m);
     cudaDeviceSynchronize();
     cudaError_t err = cudaGetLastError();
 	if (err != cudaSuccess)
@@ -392,7 +390,7 @@ int main(int argc, char *argv[])
 	std::cout << "heap size = " <<  size <<std::endl;
     
 	printf("double test_gtsv testing\n");
-	test_gtsv_v1<<<1, 1024>>>(m);	
+	test_gtsv_v1<<<1, 512>>>(m);	
 	synch_and_check();
 
     printf("END double test_gtsv testing\n");
