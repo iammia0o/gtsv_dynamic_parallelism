@@ -88,8 +88,8 @@ void gtsv_spike_partial_diag_pivot_v1(const DOUBLE* dl, const DOUBLE* d, const D
 {
 
 
-	cudaFuncSetCacheConfig(tiled_diag_pivot_x1<DOUBLE,DOUBLE>,cudaFuncCachePreferL1);
-	cudaFuncSetCacheConfig(spike_GPU_back_sub_x1<DOUBLE>,cudaFuncCachePreferL1);
+	// cudaFuncSetCacheConfig(tiled_diag_pivot_x1<DOUBLE,DOUBLE>,cudaFuncCachePreferL1);
+	// cudaFuncSetCacheConfig(spike_GPU_back_sub_x1<DOUBLE>,cudaFuncCachePreferL1);
 	//parameter declaration
 	int s; //griddim.x
 	int stride;
