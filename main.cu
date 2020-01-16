@@ -44,6 +44,13 @@ static __device__ double get_second (void)
     return (double)tv.tv_sec + (double)tv.tv_usec / 1000000.0;
 }
 
+void synch_and_check(){
+	cudaDeviceSynchronize();
+	cudaError_t err = cudaGetLastError();
+	if (err != cudaSuccess)
+		cout << "error: " <<  cudaGetErrorString(err) << endl;
+}
+
 __device__
 void gtsv_spike_partial_diag_pivot_v1(const DOUBLE* dl, const DOUBLE* d, const DOUBLE* du, DOUBLE* b,const int m);
 
@@ -355,6 +362,8 @@ int main(int argc, char *argv[])
     
 	printf("double test_gtsv testing\n");
 	test_gtsv_v1<<<1, 32>>>(m);	
+	synch_and_check();
+
     printf("END double test_gtsv testing\n");
 
   
