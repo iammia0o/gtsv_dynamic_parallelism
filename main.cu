@@ -377,6 +377,7 @@ int main(int argc, char *argv[])
 		}
     }
 	printf ( "matrix size = %d and rhs is %d \n", m,k);
+	std::cout << "heap size = " << cuCtxGetLimit(size_t*size, CU_LIMIT_MALLOC_HEAP_SIZE) <<std::endl;
     
 	printf("double test_gtsv testing\n");
 	test_gtsv_v1<<<1, 32>>>(m);	
