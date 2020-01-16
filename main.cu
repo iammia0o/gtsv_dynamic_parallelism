@@ -264,7 +264,7 @@ void test_gtsv_v1(int m)
 
 	//this is for general matrix
     // start = get_second();
-    gtsv_spike_partial_diag_pivot_v1( dl, d, du, b,m);
+    // gtsv_spike_partial_diag_pivot_v1( dl, d, du, b,m);
     cudaDeviceSynchronize();
     cudaError_t err = cudaGetLastError();
 	if (err != cudaSuccess)
