@@ -186,8 +186,8 @@ void test_gtsv_v1(int m)
 {
 	double start,stop;
 	int tId = threadIdx.x;
-	if (tId > 0)
-		return;
+	// if (tId > 0)
+	// 	return;
 	// DOUBLE *h_dl;
 	// DOUBLE *h_d;
 	// DOUBLE *h_du;
@@ -258,7 +258,7 @@ void test_gtsv_v1(int m)
 	//this is for general matrix
     // start = get_second();
     gtsv_spike_partial_diag_pivot_v1( dl, d, du, b,m);
-    cudaDeviceSynchronize();
+    synch_and_check();
 	// stop = get_second();
     // printf("test_gtsv_v1 m=%d time=%.6f\n", m, stop-start);    
 
