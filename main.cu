@@ -33,6 +33,7 @@ OR THE USE OR OTHER DEALINGS WITH THE SOFTWARE.
 #include <sys/resource.h>
 #include <sys/sysinfo.h>
 #include <curand_kernel.h>
+#include <assert.h>
 #include <ctime>
 
 #define DEBUG 0
