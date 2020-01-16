@@ -207,6 +207,7 @@ void test_gtsv_v1(int m)
 	{		
 		// h_x_gpu=(DOUBLE *)malloc(sizeof(DOUBLE)*m);
 		// h_b_back=(DOUBLE *)malloc(sizeof(DOUBLE)*m);
+		printf("requested size = %d\n", sizeof(DOUBLE)*m * 4);
 				
 		dl = (DOUBLE*) malloc(sizeof(DOUBLE)*m); 
 		du = (DOUBLE*) malloc(sizeof(DOUBLE)*m); 
