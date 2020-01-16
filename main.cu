@@ -48,7 +48,7 @@ void synch_and_check(){
 	cudaDeviceSynchronize();
 	cudaError_t err = cudaGetLastError();
 	if (err != cudaSuccess)
-		cout << "error: " <<  cudaGetErrorString(err) << endl;
+		printf("%s", cudaGetErrorString(err));
 }
 
 __device__
