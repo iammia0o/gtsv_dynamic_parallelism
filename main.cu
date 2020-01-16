@@ -206,10 +206,15 @@ void test_gtsv_v1(int m)
 		// h_x_gpu=(DOUBLE *)malloc(sizeof(DOUBLE)*m);
 		// h_b_back=(DOUBLE *)malloc(sizeof(DOUBLE)*m);
 				
-		dl = (DOUBLE*) malloc(sizeof(DOUBLE)*m); 
-		du = (DOUBLE*) malloc(sizeof(DOUBLE)*m); 
-		d = (DOUBLE*) malloc(sizeof(DOUBLE)*m); 
-		b = (DOUBLE*) malloc(sizeof(DOUBLE)*m); 
+		// dl = (DOUBLE*) malloc(sizeof(DOUBLE)*m); 
+		// du = (DOUBLE*) malloc(sizeof(DOUBLE)*m); 
+		// d = (DOUBLE*) malloc(sizeof(DOUBLE)*m); 
+		// b = (DOUBLE*) malloc(sizeof(DOUBLE)*m); 
+
+		cudaMalloc((void **)&dl, sizeof(DOUBLE)*m); 
+		cudaMalloc((void **)&du, sizeof(DOUBLE)*m); 
+		cudaMalloc((void **)&d, sizeof(DOUBLE)*m); 
+		cudaMalloc((void **)&b, sizeof(DOUBLE)*m);
 
 		memset(d, 0, m * sizeof(DOUBLE));
 		memset(dl, 0, m * sizeof(DOUBLE));
@@ -242,8 +247,8 @@ void test_gtsv_v1(int m)
 
 	//this is for general matrix
     // start = get_second();
-    gtsv_spike_partial_diag_pivot_v1( dl, d, du, b,m);
-    cudaDeviceSynchronize();
+    // gtsv_spike_partial_diag_pivot_v1( dl, d, du, b,m);
+    // cudaDeviceSynchronize();
 	// stop = get_second();
     printf("test_gtsv_v1 m=%d time=%.6f\n", m, stop-start);    
 
