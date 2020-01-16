@@ -388,7 +388,7 @@ int main(int argc, char *argv[])
     }
 	printf ( "matrix size = %d and rhs is %d \n", m,k);
 	size_t size = 64 * 1024 * 1024;
-	cudaDeviceSetLimit(cudaLimitMallocHeapSize, size);
+	// cudaDeviceSetLimit(cudaLimitMallocHeapSize, size);
 	std::cout << "heap size = " <<  size <<std::endl;
     
 	printf("double test_gtsv testing\n");
