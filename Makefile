@@ -25,13 +25,13 @@ OBJS= main.o  spike_host.o
 # flags
 CFLAGS=
 CPPFLAGS= -O3
-NVFLAGS= -arch=sm_61 --ptxas-options=-v -Xptxas -dlcm=ca -O3
+NVFLAGS= -arch=sm_61 --ptxas-options=-v -Xptxas -dlcm=ca -O3 -dc
 
 # final output
 BIN=bin
 
 $(BIN): $(OBJS)
-	$(NVCC) -o $@ $^
+	$(NVCC)  -o $@ $^
 
 clean:
 	rm -rf $(OBJS) $(BIN)
