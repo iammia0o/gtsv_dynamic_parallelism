@@ -186,7 +186,8 @@ void gtsv_spike_partial_diag_pivot_v1(const DOUBLE* dl, const DOUBLE* d, const D
 	cudaFree(c2_buffer);
 	cudaFree(x_level_2);
 	cudaFree(w_level_2);
-	cudaFree(v_level_2);				
+	cudaFree(v_level_2);	
+	printf("tId %d finished successfully \n",threadIdx.x);			
 }
 
 
